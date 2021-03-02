@@ -1,0 +1,22 @@
+{
+   "browser_action": {
+      "default_icon": "images/icon19.png",
+      "default_popup": "popup.html"
+   },
+   "description": "You can pin some user message",
+   "icons": {
+      "128": "images/icon128.png",
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "64": "images/icon64.png"
+   },
+   "manifest_version": 2,
+   "name": "Twitch Chat Pins",
+   "permissions": [
+      "storage",
+      "tabs",
+      "*://*.twitch.tv/*"
+   ],
+   "version": "1.0.0"
+}

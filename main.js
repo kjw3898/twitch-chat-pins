@@ -1,5 +1,4 @@
 var filterList = null;
-
 document.addEventListener('DOMContentLoaded', function () {
     filterList = JSON.parse(localStorage.getItem('filterList'));
     var btnAddWord = document.getElementById('btnAddWord');
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         CreateTable();
     }
 });
-
 function AddWord() {
     try {
         var inputBody = document.getElementById('inputBody');
@@ -45,14 +43,14 @@ function AddTableItem(filterWord) {
     var tdWord = document.createElement('td');
     var tdDestroy = document.createElement('td');
     var btDestroy = document.createElement('button');
-    var iDestroy = document.createElement('i');
+    var trashDestroy = document.createElement('span');
 
     try {
-        iDestroy.setAttribute('class', 'fas fa-trash-alt');
+        trashDestroy.setAttribute('class', 'trash')
         btDestroy.setAttribute('type', 'button');
-        btDestroy.setAttribute('class', 'btn btn-danger btn-sm');
+        btDestroy.setAttribute('class', 'btn btn-danger btn-sm trashbutton');
         btDestroy.addEventListener('click', DeleteTableItem);
-        btDestroy.appendChild(iDestroy);
+        btDestroy.appendChild(trashDestroy);
         tdDestroy.setAttribute('class', 'align-middle col-sm-2');
         tdDestroy.appendChild(btDestroy);
         tdWord.setAttribute('class', 'align-middle col-sm-10');
@@ -76,15 +74,16 @@ function StartFilter() {
     });
 }
 
-function DeleteTableItem() {
+function DeleteTableItem(e) {
     try {
-        var index = filterList.indexOf($(this).closest('tr').children('td').html());
+        var parentTR=e.target.parentNode.parentNode.parentNode;
+        var index = filterList.indexOf(parentTR.querySelector('td').innerText);
         if (index != -1) {
             filterList.splice(index, 1);
         } else {
             alert("-1");
         }
-        $(this).closest('tr').remove();
+        parentTR.remove();
     } catch (error) {
         alert(error);
     }

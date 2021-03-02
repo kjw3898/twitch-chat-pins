@@ -25,6 +25,7 @@ try {
             if (filterList.indexOf(username) != -1) {
               let fixChat = node.cloneNode(true);
               fixChat.style.cssText = "padding-left: 0px; padding-right: 0px";
+              fixChat.querySelector(".chat-line__username-container").firstChild.remove();
               dupNode.appendChild(fixChat);
               if (dupNode.childNodes.length > 8) {
                 dupNode.removeChild(dupNode.firstChild);

@@ -14,7 +14,6 @@
    "manifest_version": 2,
    "name": "Twitch Chat Pins",
    "permissions": [
-      "storage",
       "tabs",
       "*://*.twitch.tv/*"
    ],

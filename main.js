@@ -15,11 +15,11 @@ function AddWord() {
     try {
         var inputBody = document.getElementById('inputBody');
         if (inputBody.value == '' || inputBody.value == null) {
-            alert('단어를 입력해주십시오.');
+            alert('please input username.');
             return false;
         }
         if (filterList.indexOf(inputBody.value) != -1) {
-            alert('이미 존재하는 단어입니다 : ' + inputBody.value);
+            alert('this username is exist : ' + inputBody.value);
             return false;
         }
         AddTableItem(inputBody.value);

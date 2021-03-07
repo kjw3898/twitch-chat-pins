@@ -7,7 +7,7 @@
     <title>Twitch Chat Pins</title>
 </head>
 
-<body style="min-width: 600px;">
+<body style="min-width: 500px;">
     <div class="container-fluid" style="margin: 1rem; width: 95%;">
 
         <div class="row">
@@ -15,7 +15,7 @@
                 <h5>TwitchChatPins</h5>
             </div>
             <div class="col-sm-7">
-                <p>v.2021-03-02</p>
+                <p>v.2021-03-07</p>
             </div>
         </div>
 
@@ -26,23 +26,18 @@
                     <th class="align-middle col-sm-10">User ID</th>
                     <th class="align-middle col-sm-2">remove</th>
                 </tr>
+                <tr class="row">
+                    <th class="align-middle col-sm-10"><input type="text" class="form-control" id="inputBody" placeholder="Input user name here."></th>
+                    <th class="align-middle col-sm-2"><button type="button" class="btn btn-primary" id="btnAddWord">ADD</button></th>
+                </tr>
             </thead>
             <tbody id="filterListBody">
+
             </tbody>
         </table>
-
-        <div class="form-row">
-            <div class="form-group col-sm-12">
-                <input type="text" class="form-control" id="inputBody" placeholder="Input user name here.">
-            </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-block" id="btnAddWord">Add user pin</button>
         <hr>
-        <p style="text-align: center;" id="status">Not Pinned. <strong class="text-danger">Press start button to Pinned
-                message. </strong></p>
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="btnStart">Start</button>
     </div>
-    <script src="main.js"></script>
+    <script src="popup.js"></script>
 </body>
 
 </html>

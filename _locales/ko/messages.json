@@ -1,0 +1,22 @@
+{
+    "appName": {
+      "message": "트위치 채팅 고정",
+      "description": "The title of the application, displayed in the web store."
+    },
+    "appDesc": {
+      "message": "특정 유저의 채팅을 고정하여 더 재밌게 트위치를 시청하세요!",
+      "description":"The description of the application, displayed in the web store."
+    },
+    "userID": {
+      "message": "고정할 트위치 아이디"
+    },
+    "removeUser": {
+      "message": "삭제"
+    },
+    "inputPlaceholder": {
+      "message": "여기에 ID를 입력해주세요"
+    },
+    "addButton": {
+      "message": "추가"
+    }
+  }

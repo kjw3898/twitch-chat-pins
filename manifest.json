@@ -16,7 +16,6 @@
          "matches": ["*://twitch.tv/*","*://*.twitch.tv/*"],
          "run_at": "document_idle"
       }],
-   "description": "You can pin some user message",
    "icons": {
       "128": "images/icon128.png",
       "16": "images/icon16.png",
@@ -25,7 +24,9 @@
       "64": "images/icon64.png"
    },
    "manifest_version": 2,
-   "name": "Twitch Chat Pins",
+   "name": "__MSG_appName__",
+   "description": "__MSG_appDesc__",
+   "default_locale": "en",
    "permissions": ["*://*.twitch.tv/*","tabs","webNavigation"],
    "version": "1.1.1",
    "web_accessible_resources": ["filter.js"]

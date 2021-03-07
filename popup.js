@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         CreateTable();
     }
+    document.getElementById('title').innerHTML = chrome.i18n.getMessage('appName');
+    document.getElementById('page-title').innerHTML = chrome.i18n.getMessage('appName');
+    document.getElementById('user-id').innerHTML = chrome.i18n.getMessage('userID');
+    document.getElementById('remove-user').innerHTML = chrome.i18n.getMessage('removeUser');
+    document.getElementById('inputBody').setAttribute("placeholder", chrome.i18n.getMessage('inputPlaceholder'));
+    document.getElementById('btnAddWord').innerHTML = chrome.i18n.getMessage('addButton');
 });
 function AddWord() {
     var inputBody = document.getElementById('inputBody');

@@ -1,0 +1,23 @@
+{
+    "appName": {
+      "message": "Twitch Chat Pins",
+      "description": "The title of the application, displayed in the web store."
+    },
+    "appDesc": {
+      "message": "Pin the chat of specific users to watch Twitch more fun!",
+      "description":"The description of the application, displayed in the web store."
+    },
+    "userID": {
+      "message": "User ID"
+    },
+    "removeUser": {
+      "message": "remove"
+    },
+    "inputPlaceholder": {
+      "message": "Input user name here."
+    },
+    "addButton": {
+      "message": "ADD"
+    }
+  }
+  

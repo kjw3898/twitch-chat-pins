@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         CreateTable();
     }
+    document.getElementById('inputBody').addEventListener('keyup', enterkey);
     document.getElementById('title').innerHTML = chrome.i18n.getMessage('appName');
     document.getElementById('page-title').innerHTML = chrome.i18n.getMessage('appName');
     document.getElementById('user-id').innerHTML = chrome.i18n.getMessage('userID');
@@ -15,6 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputBody').setAttribute("placeholder", chrome.i18n.getMessage('inputPlaceholder'));
     document.getElementById('btnAddWord').innerHTML = chrome.i18n.getMessage('addButton');
 });
+
+function enterkey() {
+    if (window.event.keyCode == 13) { // enter key
+        AddWord();
+    }
+}
+
 function AddWord() {
     var inputBody = document.getElementById('inputBody');
     if (inputBody.value == '' || inputBody.value == null) {

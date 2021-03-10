@@ -57,9 +57,9 @@ function AddTableItem(filterWord) {
     btDestroy.setAttribute('class', 'btn btn-danger btn-sm trashbutton');
     btDestroy.addEventListener('click', DeleteTableItem);
     btDestroy.appendChild(trashDestroy);
-    tdDestroy.setAttribute('class', 'align-middle col-sm-2');
+    tdDestroy.setAttribute('class', 'align-middle col-sm-3');
     tdDestroy.appendChild(btDestroy);
-    tdWord.setAttribute('class', 'align-middle col-sm-10');
+    tdWord.setAttribute('class', 'align-middle col-sm-9');
     tdWord.innerHTML = filterWord;
     tr.setAttribute('class', 'row');
     tr.appendChild(tdWord);

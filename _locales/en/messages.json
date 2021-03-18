@@ -18,6 +18,9 @@
     },
     "addButton": {
       "message": "ADD"
+    },
+    "pinChatting": {
+      "message": "Pin this user"
     }
   }
   

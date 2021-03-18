@@ -38,6 +38,7 @@ const VODObserver = new MutationObserver(function (mutations) {
     });
   });
 });
+
 const LIVEObserver = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
     mutation.addedNodes.forEach(function (node) {
@@ -58,6 +59,28 @@ const LIVEObserver = new MutationObserver(function (mutations) {
   });
 });
 
+const userCardObserver = new MutationObserver(function (mutations) {
+  mutations.forEach(function (mutation) {
+    mutation.addedNodes.forEach(function (node) {
+      if (node.hasAttribute('data-a-target')) {
+        if (node.dataset.aTarget == 'viewer-card') {
+          let nickname = node.querySelector('figure[aria-label]').getAttribute('aria-label');
+          console.log("found viewer-card." + nickname);
+          let wisperButton = node.querySelector('button[data-a-target="usercard-whisper-button"]');
+          let buttonParent = wisperButton.parentNode.parentNode.parentNode;
+          let pinButtonDiv = wisperButton.parentNode.parentNode.cloneNode(true);
+          let pinButton = pinButtonDiv.querySelector('[data-a-target="usercard-whisper-button"]');
+          pinButton.removeAttribute("data-a-target");
+          pinButton.removeAttribute("data-test-selector");
+          pinButton.querySelector('[data-a-target="tw-core-button-label-text"]').innerText = chrome.i18n.getMessage('pinChatting');
+          buttonParent.insertBefore(pinButtonDiv, buttonParent.childNodes[2]);
+          filterPinedUserList.push(nickname);
+          setFilterList();
+        }
+      }
+    })
+  })
+});
 //Answer background.js handshake
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   if (msg.text === 'check') {
@@ -78,6 +101,14 @@ function initChatPins() {
   if (!true_check) { return }
   true_check = false;
   getFilterList();
+  waitForElement('[data-a-target="chat-user-card"]').then((selector) => {
+    userCardObserver.disconnect();
+    userCardObserver.observe(selector, {
+      attributes: false,
+      childList: true,
+      subtree: true
+    });
+  });
   waitForElement('.video-chat__message-list-wrapper').then((selector) => {
     let parentChatList = document.querySelector('div.qa-vod-chat');
     let pinedVODChatListParent = selector.cloneNode(false);
@@ -91,7 +122,7 @@ function initChatPins() {
       childList: true,
       subtree: true
     });
-  })
+  });
   waitForElement('.chat-scrollable-area__message-container').then((selector) => {
     let parentChatList = document.querySelector('div.chat-input');
     pinedLiveChatList = selector.cloneNode(false);
@@ -103,7 +134,7 @@ function initChatPins() {
       childList: true,
       subtree: false
     });
-  })
+  });
 }
 function main() {
   setTimeout(function () {

@@ -18,5 +18,8 @@
     },
     "addButton": {
       "message": "추가"
+    },
+    "pinChatting": {
+      "message": "채팅 고정"
     }
   }

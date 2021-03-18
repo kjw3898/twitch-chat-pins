@@ -66,31 +66,16 @@ function AddTableItem(filterWord) {
     tr.appendChild(tdWord);
     tr.appendChild(tdDestroy);
     listBody.appendChild(tr);
-    syncFilter();
+    localStorage.removeItem('filterList');
+    localStorage.setItem('filterList', JSON.stringify(filterList));
+    setFilterList();
 }
+function setFilterList() {
+    chrome.runtime.sendMessage({ method: "setFilterList", filterList: filterList }, function (response) {
+      console.log(response.data);
+    });
+  }
 
-function syncFilter() {
-    chrome.tabs.query({
-        url: '*://*.twitch.tv/*',
-        }, function(tabs) {
-          console.log(tabs);
-          // If no Twitch tabs exist, stop the precheck.
-          if (!Array.isArray(tabs) || !tabs.length) {
-            console.log('No matching tabs found.');
-            return null;
-          }
-          tabs.forEach(function(tab) {
-            // Initializes handshake with potential twitch-clicker.js script inside the tab
-            localStorage.removeItem('filterList');
-            localStorage.setItem('filterList', JSON.stringify(filterList));
-            chrome.tabs.sendMessage( tab.id,{
-                filterList: filterList
-            });
-          });
-        });
-
- 
-}
 
 function DeleteTableItem(e) {
     var parentTR = e.target.parentNode.parentNode.parentNode;
@@ -98,6 +83,6 @@ function DeleteTableItem(e) {
     if (index != -1) {
         filterList.splice(index, 1);
         parentTR.remove();
-        syncFilter();
+        setFilterList();
     }
 }

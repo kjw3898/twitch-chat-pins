@@ -6,6 +6,17 @@ const waitForElement = async selector => {
   }
   return document.querySelector(selector)
 }
+function getFilterList() {
+  chrome.runtime.sendMessage({ method: "getFilterList" }, function (response) {
+    console.log(response.data);
+  });
+}
+function setFilterList() {
+  chrome.runtime.sendMessage({ method: "setFilterList", filterList: filterPinedUserList }, function (response) {
+    console.log(response.data);
+  });
+}
+
 let pinedVODChatList;
 let pinedLiveChatList;
 const VODObserver = new MutationObserver(function (mutations) {
@@ -66,6 +77,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 function initChatPins() {
   if (!true_check) { return }
   true_check = false;
+  getFilterList();
   waitForElement('.video-chat__message-list-wrapper').then((selector) => {
     let parentChatList = document.querySelector('div.qa-vod-chat');
     let pinedVODChatListParent = selector.cloneNode(false);

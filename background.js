@@ -37,6 +37,7 @@ function syncTabsFilterList() {
             console.log('No matching tabs found.');
             return null;
         }
+        var filterList = JSON.parse(localStorage.getItem('filterList'));
         tabs.forEach(function (tab) {
             chrome.tabs.sendMessage(tab.id, {
                 filterList: filterList

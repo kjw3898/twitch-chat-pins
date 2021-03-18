@@ -58,24 +58,48 @@ const LIVEObserver = new MutationObserver(function (mutations) {
     });
   });
 });
-
+let temp_nickname = "";
+function PinButtonCilck(e) {
+  if (filterPinedUserList.indexOf(temp_nickname) != -1) {
+    filterPinedUserList.pop(temp_nickname);
+    e.target.innerText = chrome.i18n.getMessage('pinChatting');
+  }
+  else {
+    if (temp_nickname) {
+      filterPinedUserList.push(temp_nickname);
+      e.target.innerText = chrome.i18n.getMessage('unpinChatting');
+    }
+  }
+  setFilterList();
+}
+function addPinButton(node) {
+  temp_nickname = node.querySelector('figure[aria-label]').getAttribute('aria-label');
+  let wisperButton = node.querySelector('button[data-a-target="usercard-whisper-button"]');
+  let buttonParent = wisperButton.parentNode.parentNode.parentNode;
+  let pinButtonDiv = wisperButton.parentNode.parentNode.cloneNode(true);
+  let pinButton = pinButtonDiv.querySelector('[data-a-target="usercard-whisper-button"]');
+  pinButton.removeAttribute("data-a-target");
+  pinButton.removeAttribute("data-test-selector");
+  if (filterPinedUserList.indexOf(temp_nickname) != -1) {
+    pinButton.querySelector('[data-a-target="tw-core-button-label-text"]').innerText = chrome.i18n.getMessage('unpinChatting');
+  } else {
+    pinButton.querySelector('[data-a-target="tw-core-button-label-text"]').innerText = chrome.i18n.getMessage('pinChatting');
+  }
+  pinButton.addEventListener("click", PinButtonCilck, false);
+  buttonParent.insertBefore(pinButtonDiv, buttonParent.childNodes[2]);
+}
 const userCardObserver = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
     mutation.addedNodes.forEach(function (node) {
-      if (node.hasAttribute('data-a-target')) {
-        if (node.dataset.aTarget == 'viewer-card') {
-          let nickname = node.querySelector('figure[aria-label]').getAttribute('aria-label');
-          console.log("found viewer-card." + nickname);
-          let wisperButton = node.querySelector('button[data-a-target="usercard-whisper-button"]');
-          let buttonParent = wisperButton.parentNode.parentNode.parentNode;
-          let pinButtonDiv = wisperButton.parentNode.parentNode.cloneNode(true);
-          let pinButton = pinButtonDiv.querySelector('[data-a-target="usercard-whisper-button"]');
-          pinButton.removeAttribute("data-a-target");
-          pinButton.removeAttribute("data-test-selector");
-          pinButton.querySelector('[data-a-target="tw-core-button-label-text"]').innerText = chrome.i18n.getMessage('pinChatting');
-          buttonParent.insertBefore(pinButtonDiv, buttonParent.childNodes[2]);
-          filterPinedUserList.push(nickname);
-          setFilterList();
+      if (node.nodeName != "#text") {
+        if (node.getAttribute('data-a-target') == 'viewer-card') {
+          addPinButton(node);
+        }
+        else {
+          node = node.querySelector('[data-a-target="viewer-card"]');
+          if (node) {
+            addPinButton(node);
+          }
         }
       }
     })

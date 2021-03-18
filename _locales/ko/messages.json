@@ -20,6 +20,9 @@
       "message": "추가"
     },
     "pinChatting": {
-      "message": "채팅 고정"
+      "message": "채팅고정"
+    },
+    "unpinChatting": {
+      "message": "고정해제"
     }
   }

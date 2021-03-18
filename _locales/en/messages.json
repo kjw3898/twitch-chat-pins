@@ -21,6 +21,9 @@
     },
     "pinChatting": {
       "message": "Pin this user"
+    },
+    "unpinChatting": {
+      "message": "Unpin chat"
     }
   }
   

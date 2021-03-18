@@ -8,13 +8,13 @@
       "description":"The description of the application, displayed in the web store."
     },
     "userID": {
-      "message": "고정할 트위치 아이디"
+      "message": "고정할 아이디(닉네임)"
     },
     "removeUser": {
       "message": "삭제"
     },
     "inputPlaceholder": {
-      "message": "여기에 ID를 입력해주세요"
+      "message": "닉네임 or ID 입력"
     },
     "addButton": {
       "message": "추가"

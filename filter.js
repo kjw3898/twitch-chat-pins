@@ -13,7 +13,8 @@ const VODObserver = new MutationObserver(function (mutations) {
     mutation.addedNodes.forEach(function (node) {
       if (node.tagName == 'LI') {
         let username = node.querySelector('[data-a-user]').dataset.aUser;
-        if (filterPinedUserList.indexOf(username) != -1) {
+        let nickname = node.querySelector('[data-a-user]').innerText;
+        if (filterPinedUserList.indexOf(username) != -1 || filterPinedUserList.indexOf(nickname) != -1) {
           let fixChat = node.cloneNode(true);
           fixChat.querySelector('.chat-badge').remove();
           fixChat.querySelector('[data-a-target="chat-badge"]').remove();
@@ -31,7 +32,8 @@ const LIVEObserver = new MutationObserver(function (mutations) {
     mutation.addedNodes.forEach(function (node) {
       if (node.className == 'chat-line__message') {
         let username = node.querySelector('[data-a-user]').dataset.aUser;
-        if (filterPinedUserList.indexOf(username) != -1) {
+        let nickname = node.querySelector('[data-a-user]').innerText;
+        if (filterPinedUserList.indexOf(username) != -1 || filterPinedUserList.indexOf(nickname) != -1) {
           let fixChat = node.cloneNode(true);
           fixChat.style.cssText = 'padding-left: 0px; padding-right: 0px';
           fixChat.querySelector('.chat-line__username-container').firstChild.remove();

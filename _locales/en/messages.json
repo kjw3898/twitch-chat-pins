@@ -8,13 +8,13 @@
       "description":"The description of the application, displayed in the web store."
     },
     "userID": {
-      "message": "User ID"
+      "message": "User ID(or Nickname)"
     },
     "removeUser": {
       "message": "remove"
     },
     "inputPlaceholder": {
-      "message": "Input user name here."
+      "message": "Input nickname or ID"
     },
     "addButton": {
       "message": "ADD"

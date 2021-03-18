@@ -34,8 +34,8 @@ function AddWord() {
         alert('this username is exist : ' + inputBody.value);
         return false;
     }
-    AddTableItem(inputBody.value);
     filterList.push(inputBody.value);
+    AddTableItem(inputBody.value);
     inputBody.value = '';
 }
 
@@ -72,9 +72,9 @@ function AddTableItem(filterWord) {
 }
 function setFilterList() {
     chrome.runtime.sendMessage({ method: "setFilterList", filterList: filterList }, function (response) {
-      console.log(response.data);
+        console.log(response.data);
     });
-  }
+}
 
 
 function DeleteTableItem(e) {

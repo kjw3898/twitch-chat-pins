@@ -66,6 +66,9 @@ function AddTableItem(filterWord) {
     tr.appendChild(tdWord);
     tr.appendChild(tdDestroy);
     listBody.appendChild(tr);
+    setTimeout(function() {
+        tr.className = tr.className + "-show";
+      }, 10);
     localStorage.removeItem('filterList');
     localStorage.setItem('filterList', JSON.stringify(filterList));
     setFilterList();
@@ -82,7 +85,10 @@ function DeleteTableItem(e) {
     var index = filterList.indexOf(parentTR.querySelector('td').innerText);
     if (index != -1) {
         filterList.splice(index, 1);
-        parentTR.remove();
+        parentTR.className = parentTR.className.replace('-show', '');
+        setTimeout(function() {
+            parentTR.remove();
+          }, 400);
         setFilterList();
     }
 }

@@ -1,5 +1,6 @@
 var true_check = false;
 var filterPinedUserList = [];
+var lessMode = true;
 const waitForElement = async selector => {
   while (document.querySelector(selector) === null) {
     await new Promise(resolve => requestAnimationFrame(resolve))
@@ -50,6 +51,7 @@ const LIVEObserver = new MutationObserver(function (mutations) {
           fixChat.style.cssText = 'padding-left: 0px; padding-right: 0px';
           fixChat.querySelector('.chat-line__username-container').firstChild.remove();
           pinedLiveChatList.appendChild(fixChat);
+          hideChatOverTwo();
           if (pinedLiveChatList.childNodes.length > 8) {
             pinedLiveChatList.removeChild(pinedLiveChatList.firstChild);
           }
@@ -75,7 +77,7 @@ function PinButtonCilck(e) {
 function addPinButton(node) {
   temp_nickname = node.querySelector('figure[aria-label]').getAttribute('aria-label');
   let wisperButton = node.querySelector('button[data-a-target="usercard-whisper-button"]');
-  if(wisperButton){
+  if (wisperButton) {
     let buttonParent = wisperButton.parentNode.parentNode.parentNode;
     let pinButtonDiv = wisperButton.parentNode.parentNode.cloneNode(true);
     let pinButton = pinButtonDiv.querySelector('[data-a-target="usercard-whisper-button"]');
@@ -89,7 +91,6 @@ function addPinButton(node) {
     pinButton.addEventListener("click", PinButtonCilck, false);
     buttonParent.insertBefore(pinButtonDiv, buttonParent.childNodes[2]);
   }
- 
 }
 const userCardObserver = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
@@ -124,6 +125,38 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     sendResponse({ status: 'ok' })
   }
 });
+function hideChatOverTwo() {
+  let parentChatList = document.querySelector('div.chat-input');
+  let chatList = parentChatList.querySelectorAll('div.chat-input .chat-line__message');
+  let moreButtonDiv = parentChatList.firstChild;
+  if (lessMode && chatList.length > 2) {
+    let nowTransform = moreButtonDiv.firstChild.style.transform;
+    if (!nowTransform) {
+      moreButtonDiv.innerHTML = '<svg version="1.1" viewBox="0 0 20 20" x="0px" y="0px" ><g><path d="M13.5 14.5L9 10l4.5-4.5L12 4l-6 6 6 6 1.5-1.5z"></path></g></svg>';
+      moreButtonDiv.setAttribute("style", "display: table;margin-left: auto;margin-right: auto;height: 15px;");
+      moreButtonDiv.firstChild.setAttribute("style", "fill: var(--color-text-overlay);transform: rotate(90deg);height: 15px;");
+      moreButtonDiv.firstChild.addEventListener("click", moreButtonCilck, false);
+    } else if (nowTransform != "rotate(90deg)") {
+      moreButtonDiv.firstChild.setAttribute("style", "fill: var(--color-text-overlay);transform: rotate(90deg);height: 15px;");
+    }
+    for (let i = 0; i < chatList.length - 2; i++) {
+      chatList[i].style.display = "none";
+    }
+  }
+  else {
+    if (chatList.length > 2) {
+      moreButtonDiv.firstChild.setAttribute("style", "fill:var(--color-text-overlay);transform: rotate(270deg);height: 15px;");
+    }
+    for (let i = 0; i < chatList.length; i++) {
+      chatList[i].style.display = "block";
+    }
+  }
+}
+function moreButtonCilck(e) {
+  lessMode = !lessMode;
+  hideChatOverTwo();
+}
+
 function initChatPins() {
   if (!true_check) { return }
   true_check = false;
@@ -155,6 +188,10 @@ function initChatPins() {
     pinedLiveChatList = selector.cloneNode(false);
     parentChatList.insertBefore(pinedLiveChatList, parentChatList.firstChild);
     parentChatList.classList.add('tw-border-t');
+    var moreButtonDiv = document.createElement("div");
+    moreButtonDiv.innerHTML = '<div class="tw-flex tw-full-width tw-justify-content-center tw-pd-05"><div class="channel-leaderboard-header-rotating__expand-grabber tw-border-radius-large tw-c-background-alt-2"></div></div>';
+    moreButtonDiv.firstChild.firstChild.addEventListener("click", moreButtonCilck, false);
+    parentChatList.insertBefore(moreButtonDiv, parentChatList.firstChild);
     LIVEObserver.disconnect();
     LIVEObserver.observe(selector, {
       attributes: false,

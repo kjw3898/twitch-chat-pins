@@ -28,6 +28,6 @@
    "description": "__MSG_appDesc__",
    "default_locale": "en",
    "permissions": ["*://*.twitch.tv/*","tabs","webNavigation"],
-   "version": "1.2.0",
+   "version": "1.2.1",
    "web_accessible_resources": ["filter.js"]
 }

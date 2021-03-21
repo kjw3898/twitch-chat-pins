@@ -185,10 +185,13 @@ function initChatPins() {
   });
   waitForElement('.chat-scrollable-area__message-container').then((selector) => {
     let parentChatList = document.querySelector('div.chat-input');
+    if(parentChatList.firstChild.className=="pinedChatListDiv")
+      return;
     pinedLiveChatList = selector.cloneNode(false);
     parentChatList.insertBefore(pinedLiveChatList, parentChatList.firstChild);
     parentChatList.classList.add('tw-border-t');
     var moreButtonDiv = document.createElement("div");
+    moreButtonDiv.className="pinedChatListDiv";
     moreButtonDiv.innerHTML = '<div class="tw-flex tw-full-width tw-justify-content-center tw-pd-05"><div class="channel-leaderboard-header-rotating__expand-grabber tw-border-radius-large tw-c-background-alt-2"></div></div>';
     moreButtonDiv.firstChild.firstChild.addEventListener("click", moreButtonCilck, false);
     parentChatList.insertBefore(moreButtonDiv, parentChatList.firstChild);

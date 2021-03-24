@@ -134,10 +134,10 @@ function hideChatOverTwo() {
     if (!nowTransform) {
       moreButtonDiv.innerHTML = '<svg version="1.1" viewBox="0 0 20 20" x="0px" y="0px" ><g><path d="M13.5 14.5L9 10l4.5-4.5L12 4l-6 6 6 6 1.5-1.5z"></path></g></svg>';
       moreButtonDiv.setAttribute("style", "display: table;margin-left: auto;margin-right: auto;height: 15px;");
-      moreButtonDiv.firstChild.setAttribute("style", "fill: var(--color-text-overlay);transform: rotate(90deg);height: 15px;");
+      moreButtonDiv.firstChild.setAttribute("style", "fill: currentColor;transform: rotate(90deg);height: 15px;");
       moreButtonDiv.firstChild.addEventListener("click", moreButtonCilck, false);
     } else if (nowTransform != "rotate(90deg)") {
-      moreButtonDiv.firstChild.setAttribute("style", "fill: var(--color-text-overlay);transform: rotate(90deg);height: 15px;");
+      moreButtonDiv.firstChild.setAttribute("style", "fill: currentColor;transform: rotate(90deg);height: 15px;");
     }
     for (let i = 0; i < chatList.length - 2; i++) {
       chatList[i].style.display = "none";
@@ -145,7 +145,7 @@ function hideChatOverTwo() {
   }
   else {
     if (chatList.length > 2) {
-      moreButtonDiv.firstChild.setAttribute("style", "fill:var(--color-text-overlay);transform: rotate(270deg);height: 15px;");
+      moreButtonDiv.firstChild.setAttribute("style", "fill: currentColor;transform: rotate(270deg);height: 15px;");
     }
     for (let i = 0; i < chatList.length; i++) {
       chatList[i].style.display = "block";

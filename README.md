@@ -7,6 +7,9 @@ download: https://chrome.google.com/webstore/detail/twitch-chat-pins/ehcdedkmlcb
 - [ ] VOD Pinned chat Develop
   - [ ] pinned chat make scroll able  
   - [ ] add less button
+- [ ] chrome store info update
+  - [ ] change this extention icon to pinned image
+  - [ ] renew screenshot   
 
 ## Contributors 
 

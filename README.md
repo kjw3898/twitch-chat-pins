@@ -3,3 +3,15 @@ twitch chat pin chrome extension. this extension Filter and pin chats of specifi
 download: https://chrome.google.com/webstore/detail/twitch-chat-pins/ehcdedkmlcbdgddpplpjobemecjdmhdf
 ![screenshot2](./images/screenshot2.png)
 ![screenshot1](./images/screenshot1.png)
+## TODO
+- [ ] VOD Pinned chat Develop
+  - [ ] pinned chat make scroll able  
+  - [ ] add less button
+
+## Contributors 
+
+### [rohroh](https://github.com/rohroh) contribute below
+Live pinned chats:
+- Move to top of main Twitch chat
+- Made it scrollable
+- Added chat badges back in

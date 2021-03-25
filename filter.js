@@ -19,7 +19,11 @@ function setFilterList() {
 }
 
 let pinedVODChatList;
-let pinedLiveChatList;
+let pinedLiveChatList;            // chat messages list
+let scrollableChatList;           // main chat list (use for resizing)
+let pinnedLiveChatScrollView;     // scrollable live chat view
+const maxChatHeight = 200;        // Max height for pinned chats
+
 const VODObserver = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
     mutation.addedNodes.forEach(function (node) {
@@ -48,18 +52,28 @@ const LIVEObserver = new MutationObserver(function (mutations) {
         let nickname = node.querySelector('[data-a-user]').innerText;
         if (filterPinedUserList.indexOf(username) != -1 || filterPinedUserList.indexOf(nickname) != -1) {
           let fixChat = node.cloneNode(true);
-          fixChat.style.cssText = 'padding-left: 0px; padding-right: 0px';
-          fixChat.querySelector('.chat-line__username-container').firstChild.remove();
+          //fixChat.style.cssText = 'padding-left: 0px; padding-right: 0px';
+          //fixChat.querySelector('.chat-line__username-container').firstChild.remove();
           pinedLiveChatList.appendChild(fixChat);
-          hideChatOverTwo();
-          if (pinedLiveChatList.childNodes.length > 8) {
-            pinedLiveChatList.removeChild(pinedLiveChatList.firstChild);
-          }
+
+          ResizePinnnedChatList(node);
+          //hideChatOverTwo();
         }
       }
     });
   });
 });
+
+// resize pinned chat list
+function ResizePinnnedChatList(node) {
+  let chatListHeight = scrollableChatList.offsetHeight + node.offsetHeight + (scrollableChatList.offsetHeight > 10 ? 0 : 10);
+  scrollableChatList.style.minHeight = chatListHeight > maxChatHeight ? maxChatHeight + 'px' : chatListHeight + 'px';
+  scrollableChatList.style.maxHeight = scrollableChatList.style.minHeight;
+  // scroll to bottom
+  // TODO: Add a stop if scrolled up
+  pinnedLiveChatScrollView.scrollTop = pinnedLiveChatScrollView.scrollHeight;
+}
+
 let temp_nickname = "";
 function PinButtonCilck(e) {
   if (filterPinedUserList.indexOf(temp_nickname) != -1) {
@@ -157,6 +171,11 @@ function moreButtonCilck(e) {
   hideChatOverTwo();
 }
 
+// Clear pinned chat list
+function clearPinnedChat() {
+  pinedLiveChatList.innerHTML = '';
+}
+
 function initChatPins() {
   if (!true_check) { return }
   true_check = false;
@@ -184,17 +203,20 @@ function initChatPins() {
     });
   });
   waitForElement('.chat-scrollable-area__message-container').then((selector) => {
-    let parentChatList = document.querySelector('div.chat-input');
-    if(parentChatList.firstChild.className=="pinedChatListDiv")
+    if (document.querySelectorAll('.chat-scrollable-area__message-container').length > 1) {
       return;
-    pinedLiveChatList = selector.cloneNode(false);
-    parentChatList.insertBefore(pinedLiveChatList, parentChatList.firstChild);
-    parentChatList.classList.add('tw-border-t');
-    var moreButtonDiv = document.createElement("div");
-    moreButtonDiv.className="pinedChatListDiv";
-    moreButtonDiv.innerHTML = '<div class="tw-flex tw-full-width tw-justify-content-center tw-pd-05"><div class="channel-leaderboard-header-rotating__expand-grabber tw-border-radius-large tw-c-background-alt-2"></div></div>';
-    moreButtonDiv.firstChild.firstChild.addEventListener("click", moreButtonCilck, false);
-    parentChatList.insertBefore(moreButtonDiv, parentChatList.firstChild);
+    }
+    // Main Twitch Chat
+    let parentChatList = document.querySelector('div.chat-list--default');
+    scrollableChatList = selector.parentElement.parentElement.parentElement.parentElement.cloneNode(true);
+    // hide at initization by setting min and max height both needs to be set resizes with main chat
+    scrollableChatList.style.minHeight = '0px';
+    scrollableChatList.style.maxHeight = '0px';
+    pinnedLiveChatScrollView = scrollableChatList.querySelector('.simplebar-scroll-content')
+    pinedLiveChatList = scrollableChatList.querySelector('.chat-scrollable-area__message-container');
+    clearPinnedChat();
+    scrollableChatList.classList.add('tw-border-b');
+    parentChatList.insertBefore(scrollableChatList, parentChatList.firstChild);
     LIVEObserver.disconnect();
     LIVEObserver.observe(selector, {
       attributes: false,

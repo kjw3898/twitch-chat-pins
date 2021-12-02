@@ -45,6 +45,43 @@ function syncTabsFilterList() {
         })
     })
 }
+function syncPinManager() {
+    chrome.tabs.query({
+        url: '*://*.twitch.tv/*',
+    }, function (tabs) {
+        console.log(tabs);
+        // If no Twitch tabs exist, stop the precheck.
+        if (!Array.isArray(tabs) || !tabs.length) {
+            console.log('No matching tabs found.');
+            return null;
+        }
+        var pinManager = localStorage.getItem('PinManager');
+        tabs.forEach(function (tab) {
+            chrome.tabs.sendMessage(tab.id, {
+                pinManager: pinManager
+            });
+        })
+    })
+}
+function syncPinVIP() {
+    chrome.tabs.query({
+        url: '*://*.twitch.tv/*',
+    }, function (tabs) {
+        console.log(tabs);
+        // If no Twitch tabs exist, stop the precheck.
+        if (!Array.isArray(tabs) || !tabs.length) {
+            console.log('No matching tabs found.');
+            return null;
+        }
+        var pinVIP = localStorage.getItem('PinVIP');
+        tabs.forEach(function (tab) {
+            chrome.tabs.sendMessage(tab.id, {
+                pinVIP: pinVIP
+            });
+        })
+    })
+}
+
 // Handle URL change for Twitch Tabs to prevent bonus points detection from breaking
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
     if (details.frameId === 0) { // indicates the navigation happens in the tab content window, not in a subframe
@@ -69,11 +106,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             sendResponse({ data: "getFilterList Done" });
         }
     }
-    if (request.method == "setFilterList") {
+    else if (request.method == "setFilterList") {
         localStorage.removeItem('filterList');
         localStorage.setItem('filterList', JSON.stringify(request.filterList));
         sendResponse({ data: "setFilterList Done" });
         syncTabsFilterList();
+    }
+    else if (request.method == 'getPinManager') {
+        syncPinManager();
+        sendResponse({ data: "getPinManager Done. " + localStorage.getItem('PinManager') });
+    }
+    else if (request.method == "setPinManager") {
+        localStorage.removeItem('PinManager');
+        localStorage.setItem('PinManager', request.buttonState);
+        sendResponse({ data: "Set manager button: " + request.buttonState });
+        syncPinManager();
+    }
+    else if (request.method == 'getPinVIP') {
+        syncPinVIP();
+        sendResponse({ data: "getPinVIP Done. " + localStorage.getItem('PinVIP') });
+    }
+    else if (request.method == "setPinVIP") {
+        localStorage.removeItem('PinVIP');
+        localStorage.setItem('PinVIP', request.buttonState);
+        sendResponse({ data: "Set VIP button: " + request.buttonState });
+        syncPinVIP();
     }
     else {
         sendResponse({ data: "no method" });

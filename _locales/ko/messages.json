@@ -24,5 +24,11 @@
     },
     "unpinChatting": {
       "message": "고정해제"
+    },
+    "PinManagerLabel": {
+      "message": "매니저 채팅 고정."
+    },
+    "PinVIPLabel": {
+      "message": "VIP 채팅 고정."
     }
   }

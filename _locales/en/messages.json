@@ -24,6 +24,12 @@
     },
     "unpinChatting": {
       "message": "Unpin chat"
+    },
+    "PinManagerLabel": {
+      "message": "Pin manager chat."
+    },
+    "PinVIPLabel": {
+      "message": "Pin VIP chat."
     }
   }
   

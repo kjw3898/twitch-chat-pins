@@ -8,13 +8,14 @@ download: https://chrome.google.com/webstore/detail/twitch-chat-pins/ehcdedkmlcb
 ## TODO
 
 - [ ] VOD Pinned chat Develop
-  - [ ] pinned chat make scroll able
+  - [x] pinned chat make scroll able
   - [ ] add less button
-  - [ ] new twitch VOD UI not work
+  - [x] new twitch VOD UI not work
 - [ ] chrome store info update
   - [ ] change this extention icon to pinned image
   - [ ] renew screenshot
 - [ ] sync chrome api
+- [x] Issue with font sizes
 
 ## Contributors
 
@@ -25,3 +26,4 @@ Live pinned chats:
 - Move to top of main Twitch chat
 - Made it scrollable
 - Added chat badges back in
+- Added Mod and VIP chat pins

@@ -135,25 +135,6 @@ const LIVEObserver = new MutationObserver(function (mutations) {
   });
 });
 
-// resize pinned chat list
-function ResizePinnnedChatList(node) {
-  let chatListHeight = scrollableChatList.offsetHeight + node.offsetHeight + (scrollableChatList.offsetHeight > 10 ? 0 : 10);
-  scrollableChatList.style.minHeight = chatListHeight > maxChatHeight ? maxChatHeight + 'px' : chatListHeight + 'px';
-  scrollableChatList.style.maxHeight = scrollableChatList.style.minHeight;
-  // scroll to bottom
-  // TODO: Add a stop if scrolled up
-  pinnedLiveChatScrollView.scrollTop = pinnedLiveChatScrollView.scrollHeight;
-}
-
-function ResizeVODChatList(node) {
-  let chatListHeight = scrollableChatList.offsetHeight + node.offsetHeight + (scrollableChatList.offsetHeight > 10 ? 0 : 10);
-  scrollableChatList.style.minHeight = chatListHeight > maxChatHeight ? maxChatHeight + 'px' : chatListHeight + 'px';
-  scrollableChatList.style.maxHeight = scrollableChatList.style.minHeight;
-  // scroll to bottom
-  // TODO: Add a stop if scrolled up
-  scrollableChatList.scrollTop = scrollableChatList.scrollHeight;
-}
-
 const userCardObserver = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
     mutation.addedNodes.forEach(function (node) {
@@ -176,7 +157,7 @@ function resizePinnedChatList() {
   let maxHeightPoint = 0.2;  //need relation value for theatre mode (video and chat vertical arrangement)
   let maxHeight = '20%';
   let lessThreshold = 76.2;
-  let pinedChatListHeight = pinedLiveChatList.offsetHeight + 12.4; //for safty badge height (each 0.6) + lessbutton(10px)
+  let pinedChatListHeight = pinedLiveChatList.offsetHeight + 12.4 * !!pinedLiveChatList.offsetHeight; //for safty badge height (each 0.6) + lessbutton(10px)
   let chatListHeight = scrollableChatList.parentElement.offsetHeight;
   if (lessMode) {     //in less mode
     if (pinedChatListHeight > lessThreshold) {
@@ -205,7 +186,7 @@ function resizeVODPinnedChatList() {
   let maxHeightPoint = 0.2;  //need relation value for theatre mode (video and chat vertical arrangement)
   let maxHeight = '20%';
   let lessThreshold = 76.2;
-  let pinedChatListHeight = pinedVODChatList.scrollHeight + 12.4; //for safty badge height (each 0.6) + lessbutton(10px)
+  let pinedChatListHeight = pinedVODChatList.scrollHeight + 12.4 * !!pinedVODChatList.scrollHeight; //for safty badge height (each 0.6) + lessbutton(10px)
   let chatListHeight = scrollableChatList.parentElement.offsetHeight;
   if (lessMode) {     //in less mode
     if (pinedChatListHeight > lessThreshold) {
